@@ -20,14 +20,14 @@ Include the following args:
 
 
 ```bash
-python -i main.py 'OHLC' 'XXBTZUSD' '2021-3-1 00:00:00' '2021-3-1 04:00:00' '4H' 'OHLC_analysis_file_mar2021_4H.parquet'
+python main.py 'OHLC' 'XXBTZUSD' '2021-3-1 00:00:00' '2021-3-1 04:00:00' '4H' 'OHLC_analysis_file_mar2021_4H.parquet'
 
 ```
 
 ## Example Trade Endpoint
 
 ```bash
-python -i main.py 'Trade' 'XXBTZUSD' '2021-3-1 00:00:00' '2021-3-1 04:00:00' '4H' 'Trade_analysis_file_mar2021_4H.parquet'
+python main.py 'Trade' 'XXBTZUSD' '2021-3-1 00:00:00' '2021-3-1 04:00:00' '4H' 'Trade_analysis_file_mar2021_4H.parquet'
 
 ```
 
