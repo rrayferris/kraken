@@ -20,18 +20,13 @@ class Kraken():
         start_date              (str): First Datetime you would like OHLC Data.
         end_date                (str): Last Dattime you would like OHLC Data
         interval                (int): Time-Interval for which you want data (Hour, Minute, Day)
-        raw_file_name           (str): Raw file output
-        intermediary_file_name  (str): Intermediary file output
         business_file_name      (str): Business File Output    
     """
-    
-    def __init__(self, pair, start_date, end_date, interval, raw_file_name, intermediary_file_name, business_file_name) -> None:
+    def __init__(self, pair, start_date, end_date, interval, business_file_name) -> None:
         self.pair = pair
         self.start_unix = int(time.mktime(start_date.timetuple()))
         self.end_unix = int(time.mktime(end_date.timetuple()))
         self.interval = interval
-        self.raw_file_name = raw_file_name
-        self.intermediary_file_name = intermediary_file_name
         self.business_file_name = business_file_name
 
     def get_ohlc(self, interval):
@@ -58,7 +53,7 @@ class Kraken():
                 self.start_unix = int(ohlc[0].max())
             else:
                 return r.text
-            time.sleep(2)
+            time.sleep(2) ## sleep so that we don't exceed the rate limit 
         ohlc.columns =['date', 'open', 'high', 'low', 'close', 'vwap', 'volume', 'tradecount']
         ohlc = ohlc.iloc[:-1 , :]
         return ohlc
@@ -79,8 +74,8 @@ class Kraken():
         """
         data[['low', 'high', 'open', 'close']] = data[['low', 'high', 'open', 'close']].apply(pd.to_numeric)
         data['hlc3'] = (data['low'] + data['high'] + data['close']) / 3
-        data['mean'] = data.hlc3.rolling(24).mean()
-        data['median'] = data.hlc3.rolling(24).median()
+        data['mean'] = data.hlc3.rolling(6).mean()
+        data['median'] = data.hlc3.rolling(6).median()
         return data
 
     def get_trades(self):
@@ -101,7 +96,7 @@ class Kraken():
                 self.start_unix = int(trades[2].max())
             else:
                 return r.text
-            time.sleep(2)
+            time.sleep(2) ## sleep so that we don't exceed the rate limit 
         trades.columns = ['price', 'amount', 'unix_date', 'transaction_type', 'long', 'unknown']    
         return trades 
 

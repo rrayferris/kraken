@@ -6,9 +6,9 @@ def transform_interval(interval):
     return numeric[non_numeric.index(interval)]
 
 def error_catching(func):
-    def wrapper(self, *args, **kwargs):
+    def wrapper( *args, **kwargs):
         try:
-            return func(self, *args, **kwargs)
+            return func(*args, **kwargs)
         except Exception as e:
             return f"Method '{func.__name__}' Failed {str(e)}"
     return wrapper
